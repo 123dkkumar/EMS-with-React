@@ -9,3 +9,38 @@
     background-color: rgb(1,32,93,0.6);
     color: white;
 }
+
+/* Login Form Box */
+.loginForm {
+  
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Alert Message */
+.alert {
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* Input Fields */
+.form-control {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Button */
+.btn-success {
+  padding: 10px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  transform: scale(1.025);
+}
