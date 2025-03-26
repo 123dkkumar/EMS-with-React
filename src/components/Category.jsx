@@ -1,15 +1,19 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const Category = () => {
-  //const [category, setCategory] = useState();
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/auth/category")
       .then((result) => {
-        console.log(result.data);
+        if (result.data.Status) {
+          setCategory(result.data.Result);
+        } else {
+          alert(result.data.Errror);
+        }
       })
       .catch((err) => console.log(err));
   }, []);
@@ -22,14 +26,20 @@ const Category = () => {
       <Link to="/dashboard/add_category" className="btn btn-success fw-bold">
         Add Category
       </Link>
-      <div>
-        <table>
+      <div className="mt-3 ">
+        <table className="table ">
           <thead>
             <tr>
               <th>Name</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            {category.map((c) => (
+              <tr>
+                <td>{c.name}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>
