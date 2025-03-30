@@ -1,20 +1,21 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const AddEmployee = () => {
+const EditEmployee = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [category, setCategory] = useState([]);
   const [employee, setEmployee] = useState({
     name: "",
     email: "",
-    password: "",
     salary: "",
     address: "",
-    image: "",
     category_id: "",
   });
-  const [category, setCategory] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -27,26 +28,31 @@ const AddEmployee = () => {
         }
       })
       .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:3000/auth/employee/" + id)
+      .then((result) => {
+        setEmployee({
+          ...employee,
+          name: result.data.Result[0].name,
+          email: result.data.Result[0].email,
+          address: result.data.Result[0].address,
+          salary: result.data.Result[0].salary,
+          category_id: result.data.Result[0].category_id,
+        });
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", employee.name);
-    formData.append("email", employee.email);
-    formData.append("password", employee.password);
-    formData.append("address", employee.address);
-    formData.append("salary", employee.salary);
-    formData.append("image", employee.image);
-    formData.append("category_id", employee.category_id);
-
     axios
-      .post("http://localhost:3000/auth/add_employee", formData)
+      .put("http://localhost:3000/auth/edit_employee/" + id, employee)
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/employee");
         } else {
-          alert(result.data.Error);
+          alert(result.data.Errror);
         }
       })
       .catch((err) => console.log(err));
@@ -55,7 +61,7 @@ const AddEmployee = () => {
   return (
     <div className="d-flex flex justify-content-center align-items-center mt-3">
       <div className="p-3 rounded w-50 border  ">
-        <h2 className="text-center">Add Employee</h2>
+        <h2 className="text-center">Edit Employee</h2>
         <form className="row g-1" onSubmit={handleSubmit}>
           <div className="col-12">
             <label htmlFor="inputName" className="form-level">
@@ -67,6 +73,7 @@ const AddEmployee = () => {
               }
               type="text"
               id="inputName"
+              value={employee.name}
               placeholder="Enter name"
               className="form-control rounded-0"
             />
@@ -82,24 +89,12 @@ const AddEmployee = () => {
               type="email"
               id="inputEmail4"
               placeholder="Enter Email"
+              value={employee.email}
               autoComplete="off"
               className="form-control rounded-0"
             />
           </div>
-          <div className="col-12">
-            <label htmlFor="inputPassword4" className="form-label">
-              <strong>Password </strong>
-            </label>
-            <input
-              onChange={(e) =>
-                setEmployee({ ...employee, password: e.target.value })
-              }
-              type="password"
-              id="inputPassword4"
-              placeholder="Enter Password"
-              className="form-control rounded-0"
-            />
-          </div>
+
           <div className="col-12">
             <label htmlFor="inputSalary" className="form-label">
               <strong>Salary</strong>
@@ -110,12 +105,13 @@ const AddEmployee = () => {
               }
               type="text"
               id="inputSalary"
+              value={employee.salary}
               placeholder="Enter Salary"
               className="form-control rounded-0"
               autoCapitalize="off"
             />
           </div>
-          <div className="col-12">
+          <div className="col-12 ">
             <label htmlFor="inputAddress" className="form-label">
               <strong>Address</strong>
             </label>
@@ -125,18 +121,20 @@ const AddEmployee = () => {
               }
               type="text"
               id="inputAddress"
+              value={employee.address}
               placeholder="1234 main st"
               className="form-control rounded-0"
               autoCapitalize="off"
             />
           </div>
-          <div className="col-12">
+          <div className="col-12 mb-3">
             <label htmlFor="category" className="form-label">
               <strong>Category</strong>
             </label>
             <select
               name="category"
               id="category"
+              value={employee.category_id}
               className="form-select"
               onChange={(e) =>
                 setEmployee({ ...employee, category_id: e.target.value })
@@ -147,22 +145,9 @@ const AddEmployee = () => {
               })}
             </select>
           </div>
-          <div className="col-12 mb-3">
-            <label htmlFor="inputFile" className="form-label">
-              <strong>Select Image</strong>
-            </label>
-            <input
-              type="file"
-              name="image"
-              id="inputGroupFile01"
-              className="form-control rounded-0"
-              onChange={(e) =>
-                setEmployee({ ...employee, image: e.target.files[0] })
-              }
-            />
-          </div>
-          <button type="submit" className="btn btn-primary w-100 ">
-            Add Employee
+
+          <button type="submit" className="btn btn-primary w-100 fw-bold ">
+            Edit Employee
           </button>
         </form>
       </div>
@@ -170,4 +155,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee;
+export default EditEmployee;

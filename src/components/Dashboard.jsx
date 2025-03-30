@@ -10,7 +10,7 @@ const Dashboard = () => {
   //   axios.get("http://localhost:3000/auth/logout").then((result) => {
   //     if (result.data.Status) {
   //       localStorage.removeItem("valid");
-  //       anvigate("/");
+  //       navigate("/");
   //     }
   //   });
   // };
@@ -24,7 +24,7 @@ const Dashboard = () => {
               className="d-flex align-items-center pb-3 mb-md-1 mt-md-3 me-md-auto text-white text-decoration-none"
             >
               <span className="fs-5 fw-bolder d-none d-sm-inline">
-                Code With Yousof
+                Code With Deepak
               </span>
             </Link>
             <ul
