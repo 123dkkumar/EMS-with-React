@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./style.css"; // Import the updated CSS file
 
 const Category = () => {
   const [category, setCategory] = useState([]);
@@ -19,26 +20,37 @@ const Category = () => {
   }, []);
 
   return (
-    <div className="px-5 mt-3">
-      <div className="d-flex justify-content-center">
-        <h3>Category Lists</h3>
+    <div className="container mt-4">
+      {/* Page Header */}
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h3 className="text-primary">Category List</h3>
+        <Link to="/dashboard/add_category" className="btn btn-success fw-bold">
+          + Add New Category
+        </Link>
       </div>
-      <Link to="/dashboard/add_category" className="btn btn-success fw-bold">
-        Add Category
-      </Link>
-      <div className="mt-3 ">
-        <table className="table ">
+
+      {/* Table Container */}
+      <div className="table-container">
+        <table className="table table-hover table-bordered">
           <thead>
             <tr>
-              <th>Name</th>
+              <th className="text-center">Category Name</th>
             </tr>
           </thead>
           <tbody>
-            {category.map((c) => (
+            {category.length > 0 ? (
+              category.map((c) => (
+                <tr key={c.id}>
+                  <td className="text-center">{c.name}</td>
+                </tr>
+              ))
+            ) : (
               <tr>
-                <td>{c.name}</td>
+                <td className="text-center text-muted">
+                  No categories available
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

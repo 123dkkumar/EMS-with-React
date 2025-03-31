@@ -10,7 +10,6 @@ const Login = () => {
   });
 
   const [error, setError] = useState(null);
-
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
@@ -29,47 +28,48 @@ const Login = () => {
   };
 
   return (
-    <div className="d-flex flex justify-content-center align-items-center vh-100 loginPage">
-      <div className="p-3 rounded w-25 border loginForm ">
-        <div className="text-danger fw-bold ">{error && error}</div>
-        <h2>Login Page</h2>
+    <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
+      <div className="p-4 rounded loginForm shadow-lg">
+        {error && <div className="alert alert-danger fw-bold">{error}</div>}
+        <h2 className="text-center text-primary fw-bold">Admin Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="email">
-              <strong>Email :</strong>
+            <label htmlFor="email" className="fw-bold">
+              Email:
             </label>
             <input
               type="email"
               name="email"
               autoComplete="off"
               placeholder="Enter Email"
-              className="form-control rounded-0"
+              className="form-control"
               onChange={(e) => setValues({ ...values, email: e.target.value })}
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="password">
-              <strong>Password :</strong>
+            <label htmlFor="password" className="fw-bold">
+              Password:
             </label>
             <input
               type="password"
               name="password"
               placeholder="Enter Password"
-              className="form-control rounded-0"
+              className="form-control"
               onChange={(e) =>
                 setValues({ ...values, password: e.target.value })
               }
             />
           </div>
-          <button className="btn btn-success w-100 rounded-0 fo fw-bold">
-            Login
-          </button>
-          <div className="className=" mb-3>
-            <input type="checkbox" name="tick" id="tick" className="mt-2" />
-            <label htmlFor="password">
-              <strong>You are agree with terms</strong>
+          <div className="mb-3 form-check">
+            <input type="checkbox" className="form-check-input" id="tick" />
+            <label
+              className="form-check-label text-black fw-bold"
+              htmlFor="tick"
+            >
+              Terms and conditions
             </label>
           </div>
+          <button className="btn btn-primary w-100 fw-bold">Login</button>
         </form>
       </div>
     </div>

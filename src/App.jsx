@@ -17,18 +17,14 @@ function App() {
       <Routes>
         <Route path="/adminlogin" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />}>
-          <Route index element={<Home />} /> {/* Default inside Dashboard */}
-          <Route path="/dashboard/employee" element={<Employee />} />
-          <Route path="/dashboard/category" element={<Category />} />
-          <Route path="/dashboard/profile" element={<Profile />} />
-          <Route path="/dashboard/add_category" element={<AddCategory />} />
-          <Route path="/dashboard/add_employee" element={<AddEmployee />} />
-          <Route
-            path="/dashboard/edit_employee/:id"
-            element={<EditEmployee />}
-          />
+          <Route path="" element={<Home />} /> {/* Default inside Dashboard */}
+          <Route path="employee" element={<Employee />} />
+          <Route path="category" element={<Category />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="add_category" element={<AddCategory />} />
+          <Route path="add_employee" element={<AddEmployee />} />
+          <Route path="edit_employee/:id" element={<EditEmployee />} />
         </Route>
-        <Route path="*" element={<h2>404 - Page Not Found</h2>} />
       </Routes>
     </BrowserRouter>
   );
